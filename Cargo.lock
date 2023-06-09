@@ -796,6 +796,7 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "clap",
+ "hyper",
  "log",
  "tokio",
  "tower",

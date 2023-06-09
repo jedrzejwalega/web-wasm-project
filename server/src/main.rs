@@ -1,6 +1,7 @@
 use std::{net::{IpAddr, Ipv6Addr, SocketAddr}, str::FromStr};
 use clap::Parser;
 use axum::{Router, routing::get};
+use hyper::server::{Builder, conn::AddrIncoming};
 
 #[derive(Parser, Debug)]
 #[clap(name = "server", about = "wasm project server")]
@@ -26,6 +27,12 @@ async fn main() {
                                                 .unwrap_or(localhost_address);
     let socket_address:SocketAddr = SocketAddr::from((server_address, server_parameters.port));
 
+    let server_to_serve:Builder<AddrIncoming> = match axum::Server::try_bind(&socket_address){
+                                                        Ok(server_builder) => server_builder,
+                                                        Err(_)=> panic!("Failed to set up server at socket address: {}", socket_address ) 
+                                                        };
+    println!("listening on http://{}", socket_address);
+    server_to_serve.serve(app.into_make_service());
 }
 
 async fn root() -> &'static str {
