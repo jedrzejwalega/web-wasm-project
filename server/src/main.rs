@@ -32,7 +32,7 @@ async fn main() {
                                                         Err(_)=> panic!("Failed to set up server at socket address: {}", socket_address ) 
                                                         };
     println!("listening on http://{}", socket_address);
-    server_to_serve.serve(app.into_make_service());
+    server_to_serve.serve(app.into_make_service()).await.expect("Unable to start the server!");
 }
 
 async fn root() -> &'static str {
