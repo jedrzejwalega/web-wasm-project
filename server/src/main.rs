@@ -1,6 +1,6 @@
 use std::{net::{IpAddr, Ipv6Addr, SocketAddr}, str::FromStr};
 use clap::Parser;
-use axum::{Router, routing::get};
+use axum::{Router, routing::get, response::IntoResponse};
 use hyper::server::{Builder, conn::AddrIncoming};
 
 #[derive(Parser, Debug)]
@@ -35,6 +35,6 @@ async fn main() {
     server_to_serve.serve(app.into_make_service()).await.expect("Unable to start the server!");
 }
 
-async fn root() -> &'static str {
+async fn root() -> impl IntoResponse{
     "Hello World!"
 }
