@@ -4,12 +4,15 @@ use yew_router::prelude::*;
 #[derive(Clone, Routable, PartialEq)]
 enum Route{
     #[at("/")]
-    Home
+    Home,
+    #[at("/hello")]
+    HelloServer
 }
 
 fn switch( available_routes:Route) -> Html {
     match available_routes{
-        Route::Home => html!{ <h1>{ "Hello Frontend!"}</h1>}
+        Route::Home => html!{ <h1>{ "Hello Frontend!"}</h1>},
+        Route::HelloServer => html!{ <HelloServer/>}
     }
 }
 
